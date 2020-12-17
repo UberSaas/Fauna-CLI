@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "target": "es6",
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "outDir": "./dist",
+    "strict": true,
+    "baseUrl": ".",
+    "resolveJsonModule": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "example"]
+}

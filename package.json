@@ -1,0 +1,56 @@
+{
+  "name": "fauna-cli",
+  "version": "1.0.0",
+  "description": "FaunaDB @cli",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.5.1"
+  },
+  "bin": {
+    "fauna": "dist/cli/bin/fauna-cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"**/*.ts\"",
+    "lint": "eslint --ext .ts --ignore-path .gitignore .",
+    "fauna": "node dist/src/cli/bin/fauna-cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ubersaas/fauna-cli.git"
+  },
+  "contributors": [
+    "Frank Weijers <frank@weijers.io>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ubersaas/fauna-cli/issues"
+  },
+  "homepage": "https://github.com/ubersaas/fauna-cli#readme",
+  "dependencies": {
+    "@nestjs/cli": "^7.5.4",
+    "commander": "^6.2.1",
+    "dotenv": "^8.2.0",
+    "faunadb": "^4.0.0",
+    "graphql": "^15.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.14",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-promise": ">=4.2.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
+  }
+}
