@@ -14,6 +14,10 @@ import { ListCollectionsCommand } from './collection/ListCollectionsCommand'
 import { ListCollectionsAction } from '../action/collection/ListCollectionsAction'
 import { ListDatabasesCommand } from './database/ListDatabasesCommand'
 import { ListDatabasesAction } from '../action/database/ListDatabasesAction'
+import { DeleteAllCollectionsCommand } from './collection/DeleteAllCollectionsCommand'
+import { DeleteAllCollectionsAction } from '../action/collection/DeleteAllCollectionsAction'
+import { DeleteAllDatabasesCommand } from './database/DeleteAllDatabasesCommand'
+import { DeleteAllDatabasesAction } from '../action/database/DeleteAllDatabasesAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -23,11 +27,15 @@ export class CommandLoader {
     new ListDatabasesCommand(new ListDatabasesAction()).load(program)
     new CreateDatabaseCommand(new CreateDatabaseAction()).load(program)
     new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
+    new DeleteAllDatabasesCommand(new DeleteAllDatabasesAction()).load(program)
 
     // Collection
     new ListCollectionsCommand(new ListCollectionsAction()).load(program)
     new CreateCollectionsCommand(new CreateCollectionsAction()).load(program)
     new DeleteCollectionsCommand(new DeleteCollectionsAction()).load(program)
+    new DeleteAllCollectionsCommand(new DeleteAllCollectionsAction()).load(
+      program
+    )
 
     this.handleInvalidCommand(program)
   }
