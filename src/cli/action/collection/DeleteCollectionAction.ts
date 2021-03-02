@@ -2,7 +2,6 @@ import * as chalk from 'chalk'
 import { Input } from '@nestjs/cli/commands'
 import { AbstractAction } from '@nestjs/cli/actions'
 import * as ora from 'ora'
-import { FaunaService } from '../../../fauna/infrastructure/service/FaunaService'
 import { prompt } from 'enquirer'
 import { DeleteCollection } from '../../../fauna/application/command/collection/DeleteCollection'
 
@@ -30,16 +29,15 @@ export class DeleteCollectionAction extends AbstractAction {
     }
 
     const spinner = ora().start('Delete collection')
-    const client = new FaunaService().getClient()
 
     return new DeleteCollection()
-      .execute(client, name.value)
+      .execute(name.value)
       .then(() => {
         spinner.succeed(chalk.green('Collection deleted'))
       })
       .catch((error: any) => {
-        spinner.fail(chalk.red('Collection could not be deleted'))
-        console.error(error)
+        spinner.fail(chalk.redBright('Collection could not be deleted'))
+        spinner.fail(chalk.redBright(error.message))
       })
   }
 }

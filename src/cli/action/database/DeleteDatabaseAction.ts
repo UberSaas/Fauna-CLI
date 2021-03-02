@@ -2,7 +2,6 @@ import * as chalk from 'chalk'
 import { Input } from '@nestjs/cli/commands'
 import { AbstractAction } from '@nestjs/cli/actions'
 import * as ora from 'ora'
-import { FaunaService } from '../../../fauna/infrastructure/service/FaunaService'
 import { prompt } from 'enquirer'
 import { DeleteDatabase } from '../../../fauna/application/command/database/DeleteDatabase'
 
@@ -30,16 +29,15 @@ export class DeleteDatabaseAction extends AbstractAction {
     }
 
     const spinner = ora().start('Delete database')
-    const client = new FaunaService().getClient()
 
     return new DeleteDatabase()
-      .execute(client, name.value)
+      .execute(name.value)
       .then(() => {
         spinner.succeed(chalk.green('Database deleted'))
       })
       .catch((error: any) => {
-        spinner.fail(chalk.red('Database could not be deleted'))
-        console.error(error)
+        spinner.fail(chalk.redBright('Database could not be deleted'))
+        spinner.fail(chalk.redBright(error.message))
       })
   }
 }
