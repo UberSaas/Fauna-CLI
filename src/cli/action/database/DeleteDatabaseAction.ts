@@ -19,7 +19,7 @@ export class DeleteDatabaseAction extends AbstractAction {
       type: 'confirm',
       initial: false,
       name: 'confirmed',
-      message: `Sure you want to delete database ${chalk.yellowBright(
+      message: `Sure you want to delete database(s) ${chalk.yellowBright(
         name.value
       )}?`,
     })
@@ -45,6 +45,6 @@ export class DeleteDatabaseAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action database:delete completed'))
+    spinner.succeed(chalk.green('Action databases:delete completed'))
   }
 }

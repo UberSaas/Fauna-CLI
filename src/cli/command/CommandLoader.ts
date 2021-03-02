@@ -10,16 +10,22 @@ import { CreateCollectionsCommand } from './collection/CreateCollectionsCommand'
 import { CreateCollectionsAction } from '../action/collection/CreateCollectionsAction'
 import { DeleteCollectionsCommand } from './collection/DeleteCollectionsCommand'
 import { DeleteCollectionsAction } from '../action/collection/DeleteCollectionsAction'
+import { ListCollectionsCommand } from './collection/ListCollectionsCommand'
+import { ListCollectionsAction } from '../action/collection/ListCollectionsAction'
+import { ListDatabasesCommand } from './database/ListDatabasesCommand'
+import { ListDatabasesAction } from '../action/database/ListDatabasesAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
     new TestCommand(new TestAction()).load(program)
 
     // Database
+    new ListDatabasesCommand(new ListDatabasesAction()).load(program)
     new CreateDatabaseCommand(new CreateDatabaseAction()).load(program)
     new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
 
     // Collection
+    new ListCollectionsCommand(new ListCollectionsAction()).load(program)
     new CreateCollectionsCommand(new CreateCollectionsAction()).load(program)
     new DeleteCollectionsCommand(new DeleteCollectionsAction()).load(program)
 

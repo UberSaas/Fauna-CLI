@@ -32,6 +32,6 @@ export class CreateDatabaseAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action database:create completed'))
+    spinner.succeed(chalk.green('Action databases:create completed'))
   }
 }

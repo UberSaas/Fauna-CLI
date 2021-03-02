@@ -6,7 +6,7 @@ export class DeleteDatabaseCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('database:delete [name]')
+      .command('databases:delete [name]')
       .description('Delete a database')
       .action(async (name: string) => {
         const inputs: Input[] = []

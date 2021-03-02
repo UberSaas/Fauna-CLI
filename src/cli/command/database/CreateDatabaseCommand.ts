@@ -6,7 +6,7 @@ export class CreateDatabaseCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('database:create [name]')
+      .command('databases:create [name]')
       .description('Create a database')
       .action(async (name: string) => {
         const inputs: Input[] = []

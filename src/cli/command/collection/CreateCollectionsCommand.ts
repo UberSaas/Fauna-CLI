@@ -6,7 +6,7 @@ export class CreateCollectionsCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('collection:create [name]')
+      .command('collections:create [name]')
       .description('Create one or more collections')
       .action(async (name: string) => {
         const inputs: Input[] = []
