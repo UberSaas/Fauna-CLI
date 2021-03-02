@@ -3,9 +3,9 @@ import { Input } from '@nestjs/cli/commands'
 import { AbstractAction } from '@nestjs/cli/actions'
 import * as ora from 'ora'
 import { prompt } from 'enquirer'
-import { DeleteDatabases } from '../../../fauna/application/command/database/DeleteDatabases'
+import { DeleteCollections } from '../../../fauna/application/command/collection/DeleteCollections'
 
-export class DeleteDatabaseAction extends AbstractAction {
+export class DeleteCollectionsAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const name = inputs.find((value: Input) => {
       return value.name === 'name'
@@ -19,7 +19,7 @@ export class DeleteDatabaseAction extends AbstractAction {
       type: 'confirm',
       initial: false,
       name: 'confirmed',
-      message: `Sure you want to delete database ${chalk.yellowBright(
+      message: `Sure you want to delete collection(s) ${chalk.yellowBright(
         name.value
       )}?`,
     })
@@ -28,23 +28,25 @@ export class DeleteDatabaseAction extends AbstractAction {
       process.exit(0)
     }
 
-    const spinner = ora().start('Delete database')
-    const databaseNames = name.value.split(',')
+    const spinner = ora().start('Delete collections')
+    const collectionNames = name.value.split(',')
 
-    for (const databaseName of databaseNames) {
-      await new DeleteDatabases()
-        .execute([databaseName])
+    for (const collectionName of collectionNames) {
+      await new DeleteCollections()
+        .execute([collectionName])
         .then(() => {
-          spinner.succeed(chalk.green(`Database '${databaseName}' deleted`))
+          spinner.succeed(chalk.green(`Collection '${collectionName}' deleted`))
         })
         .catch((error: any) => {
           spinner.fail(
-            chalk.redBright(`Database '${databaseName}' could not be deleted`)
+            chalk.redBright(
+              `Collection '${collectionName}' could not be deleted`
+            )
           )
           spinner.fail(chalk.redBright(error.message))
         })
     }
 
-    spinner.succeed(chalk.green('Action database:delete completed'))
+    spinner.succeed(chalk.green('Action collections:delete completed'))
   }
 }

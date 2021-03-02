@@ -2,7 +2,7 @@ import * as chalk from 'chalk'
 import { Input } from '@nestjs/cli/commands'
 import { AbstractAction } from '@nestjs/cli/actions'
 import * as ora from 'ora'
-import { CreateDatabase } from '../../../fauna/application/command/database/CreateDatabase'
+import { CreateDatabases } from '../../../fauna/application/command/database/CreateDatabases'
 
 export class CreateDatabaseAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
@@ -16,14 +16,22 @@ export class CreateDatabaseAction extends AbstractAction {
       throw new Error('Incorrect name')
     }
 
-    return new CreateDatabase()
-      .execute(name.value)
-      .then(() => {
-        spinner.succeed(chalk.green('Database created'))
-      })
-      .catch((error: any) => {
-        spinner.fail(chalk.redBright('Database could not be created'))
-        spinner.fail(chalk.redBright(error.message))
-      })
+    const databaseNames = name.value.split(',')
+
+    for (const databaseName of databaseNames) {
+      await new CreateDatabases()
+        .execute([databaseName])
+        .then(() => {
+          spinner.succeed(chalk.green(`Database '${databaseName}' created`))
+        })
+        .catch((error: any) => {
+          spinner.fail(
+            chalk.redBright(`Database '${databaseName}' could not be created`)
+          )
+          spinner.fail(chalk.redBright(error.message))
+        })
+    }
+
+    spinner.succeed(chalk.green('Action database:create completed'))
   }
 }

@@ -6,10 +6,10 @@ import { CreateDatabaseCommand } from './database/CreateDatabaseCommand'
 import { TestCommand } from './TestCommand'
 import { DeleteDatabaseCommand } from './database/DeleteDatabaseCommand'
 import { DeleteDatabaseAction } from '../action/database/DeleteDatabaseAction'
-import { CreateCollectionCommand } from './collection/CreateCollectionCommand'
-import { CreateCollectionAction } from '../action/collection/CreateCollectionAction'
-import { DeleteCollectionCommand } from './collection/DeleteCollectionCommand'
-import { DeleteCollectionAction } from '../action/collection/DeleteCollectionAction'
+import { CreateCollectionsCommand } from './collection/CreateCollectionsCommand'
+import { CreateCollectionsAction } from '../action/collection/CreateCollectionsAction'
+import { DeleteCollectionsCommand } from './collection/DeleteCollectionsCommand'
+import { DeleteCollectionsAction } from '../action/collection/DeleteCollectionsAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -20,8 +20,8 @@ export class CommandLoader {
     new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
 
     // Collection
-    new CreateCollectionCommand(new CreateCollectionAction()).load(program)
-    new DeleteCollectionCommand(new DeleteCollectionAction()).load(program)
+    new CreateCollectionsCommand(new CreateCollectionsAction()).load(program)
+    new DeleteCollectionsCommand(new DeleteCollectionsAction()).load(program)
 
     this.handleInvalidCommand(program)
   }
