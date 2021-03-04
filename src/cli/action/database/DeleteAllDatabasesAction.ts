@@ -31,7 +31,7 @@ export class DeleteAllDatabasesAction extends AbstractAction {
       .execute()
       .then(async (databaseNames) => {
         if (databaseNames.length === 0) {
-          spinner.info(chalk.yellowBright('\nNo databases to delete'))
+          spinner.info(chalk.cyanBright('\nNo databases to delete'))
         } else {
           spinner.info(chalk.cyanBright('\nDatabases deleted:'))
         }

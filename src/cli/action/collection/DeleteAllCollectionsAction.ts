@@ -31,7 +31,7 @@ export class DeleteAllCollectionsAction extends AbstractAction {
       .execute()
       .then(async (collectionNames) => {
         if (collectionNames.length === 0) {
-          spinner.info(chalk.yellowBright('\nNo collections to delete'))
+          spinner.info(chalk.cyanBright('\nNo collections to delete'))
         } else {
           spinner.info(chalk.cyanBright('\nCollections deleted:'))
         }
