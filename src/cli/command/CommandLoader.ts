@@ -20,12 +20,15 @@ import { DeleteAllDatabasesCommand } from './database/DeleteAllDatabasesCommand'
 import { DeleteAllDatabasesAction } from '../action/database/DeleteAllDatabasesAction'
 import { SweepDatabaseCommand } from './database/SweepDatabaseCommand'
 import { SweepDatabaseAction } from '../action/database/SweepDatabaseAction'
+import { ListCommand } from './database/ListCommand'
+import { ListAction } from '../action/database/ListAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
     new TestCommand(new TestAction()).load(program)
 
     // Database
+    new ListCommand(new ListAction()).load(program)
     new ListDatabasesCommand(new ListDatabasesAction()).load(program)
     new CreateDatabaseCommand(new CreateDatabaseAction()).load(program)
     new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
