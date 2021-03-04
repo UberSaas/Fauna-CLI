@@ -34,7 +34,7 @@ export class SweepDatabaseAction extends AbstractAction {
     await new DeleteAllDatabasesAction().handle(inputs, options)
     await new DeleteAllCollectionsAction().handle(inputs, options)
 
-    spinner.succeed(chalk.green('Action databases:sweep completed'))
+    spinner.succeed(chalk.green('Action sweep completed'))
 
     process.exit(0)
   }

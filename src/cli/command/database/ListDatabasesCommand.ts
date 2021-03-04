@@ -5,7 +5,7 @@ export class ListDatabasesCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('databases:list')
+      .command('list:databases')
       .description('List all databases')
       .action(async () => {
         await this.action.handle()

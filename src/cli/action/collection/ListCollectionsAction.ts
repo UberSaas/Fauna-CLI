@@ -6,18 +6,28 @@ import { GetCollectionNames } from '../../../fauna/application/query/collection/
 
 export class ListCollectionsAction extends AbstractAction {
   public handle(inputs: Input[], options: Input[]): Promise<void> {
-    const spinner = ora().start('List collections')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
+    const spinner = ora().start()
+
+    spinner.info(chalk.cyanBright('\nCollections:'))
 
     return new GetCollectionNames()
       .execute()
       .then((collectionNames) => {
         if (collectionNames.length === 0) {
-          spinner.succeed(chalk.green('No collections'))
+          spinner.info(chalk.yellowBright('No collections'))
         }
 
         collectionNames.forEach((collectionName) => {
-          spinner.succeed(chalk.green(collectionName))
+          spinner.info(chalk.yellowBright('- ' + collectionName))
         })
+
+        spinner.stop()
+
+        if (!subAction) {
+          process.exit(0)
+        }
       })
       .catch((error: any) => {
         spinner.fail(chalk.redBright(`Collections could not be listed`))

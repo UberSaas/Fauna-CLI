@@ -8,15 +8,15 @@ export class CreateCollectionsAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const spinner = ora().start('Create collection')
 
-    const name = inputs.find((value: Input) => {
-      return value.name === 'name'
+    const names = inputs.find((value: Input) => {
+      return value.name === 'names'
     })
 
-    if (name == null || typeof name.value !== 'string') {
+    if (names == null || typeof names.value !== 'string') {
       throw new Error('Incorrect name')
     }
 
-    const collectionNames = name.value.split(',')
+    const collectionNames = names.value.split(',')
 
     for (const collectionName of collectionNames) {
       await new CreateCollections()
@@ -34,6 +34,6 @@ export class CreateCollectionsAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action collections:create completed'))
+    spinner.succeed(chalk.green('Action create:collections completed'))
   }
 }

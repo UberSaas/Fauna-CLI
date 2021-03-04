@@ -6,12 +6,12 @@ export class DeleteDatabaseCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('databases:delete [name]')
-      .description('Delete a database')
+      .command('delete:databases [names]')
+      .description('Delete one or more databases')
       .option('-f, --force <forced>', 'Disable confirmation prompt', false)
-      .action(async (name, options) => {
+      .action(async (names, options) => {
         const inputs: Input[] = []
-        inputs.push({ name: 'name', value: name })
+        inputs.push({ name: 'names', value: names })
 
         const optionsInputs: Input[] = options.force
           ? [{ name: 'force', value: true }]

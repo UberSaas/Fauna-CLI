@@ -5,7 +5,7 @@ export class ListCollectionsCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('collections:list')
+      .command('list:collections')
       .description('List all collections')
       .action(async () => {
         await this.action.handle()

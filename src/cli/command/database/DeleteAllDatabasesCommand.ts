@@ -6,7 +6,7 @@ export class DeleteAllDatabasesCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('databases:delete:all')
+      .command('delete:databases:all')
       .description('Delete all databases')
       .option('-f, --force <forced>', 'Disable confirmation prompt', false)
       .action(async (options) => {

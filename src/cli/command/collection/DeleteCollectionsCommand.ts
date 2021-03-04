@@ -6,12 +6,12 @@ export class DeleteCollectionsCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('collections:delete [name]')
+      .command('delete:collections [names]')
       .description('Delete one or more collections')
       .option('-f, --force <forced>', 'Disable confirmation prompt', false)
-      .action(async (name, options) => {
+      .action(async (names, options) => {
         const inputs: Input[] = []
-        inputs.push({ name: 'name', value: name })
+        inputs.push({ name: 'names', value: names })
 
         const optionsInputs: Input[] = options.force
           ? [{ name: 'force', value: true }]

@@ -6,7 +6,7 @@ export class DeleteAllCollectionsCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('collections:delete:all')
+      .command('delete:collections:all')
       .description('Delete all collections')
       .option('-f, --force <forced>', 'Disable confirmation prompt', false)
       .action(async (options) => {

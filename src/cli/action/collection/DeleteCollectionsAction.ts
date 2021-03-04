@@ -7,11 +7,11 @@ import { DeleteCollections } from '../../../fauna/application/command/collection
 
 export class DeleteCollectionsAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
-    const name = inputs.find((value: Input) => {
-      return value.name === 'name'
+    const names = inputs.find((value: Input) => {
+      return value.name === 'names'
     })
 
-    if (name == null || typeof name.value !== 'string') {
+    if (names == null || typeof names.value !== 'string') {
       throw new Error('Incorrect name')
     }
 
@@ -23,7 +23,7 @@ export class DeleteCollectionsAction extends AbstractAction {
         initial: false,
         name: 'confirmed',
         message: `Are you sure you want to delete collection(s) ${chalk.yellowBright(
-          name.value
+          names.value
         )}?`,
       })
 
@@ -33,7 +33,7 @@ export class DeleteCollectionsAction extends AbstractAction {
     }
 
     const spinner = ora().start('Delete collections')
-    const collectionNames = name.value.split(',')
+    const collectionNames = names.value.split(',')
 
     for (const collectionName of collectionNames) {
       await new DeleteCollections()
@@ -51,6 +51,6 @@ export class DeleteCollectionsAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action collections:delete completed'))
+    spinner.succeed(chalk.green('Action delete:collections completed'))
   }
 }

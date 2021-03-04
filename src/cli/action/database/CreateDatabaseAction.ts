@@ -8,15 +8,15 @@ export class CreateDatabaseAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const spinner = ora().start('Create database')
 
-    const name = inputs.find((value: Input) => {
-      return value.name === 'name'
+    const names = inputs.find((value: Input) => {
+      return value.name === 'names'
     })
 
-    if (name == null || typeof name.value !== 'string') {
+    if (names == null || typeof names.value !== 'string') {
       throw new Error('Incorrect name')
     }
 
-    const databaseNames = name.value.split(',')
+    const databaseNames = names.value.split(',')
 
     for (const databaseName of databaseNames) {
       await new CreateDatabases()
@@ -32,6 +32,6 @@ export class CreateDatabaseAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action databases:create completed'))
+    spinner.succeed(chalk.green('Action create:databases completed'))
   }
 }

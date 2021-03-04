@@ -51,7 +51,7 @@ export class DeleteAllCollectionsAction extends AbstractAction {
             })
         }
 
-        spinner.succeed(chalk.green('Action collections:delete:all completed'))
+        spinner.succeed(chalk.green('Action delete:collections:all completed'))
       })
       .catch((error: any) => {
         spinner.fail(chalk.redBright(`Collections could not be deleted`))

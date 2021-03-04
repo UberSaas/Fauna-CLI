@@ -49,7 +49,7 @@ export class DeleteAllDatabasesAction extends AbstractAction {
             })
         }
 
-        spinner.succeed(chalk.green('Action databases:delete:all completed'))
+        spinner.succeed(chalk.green('Action delete:databases:all completed'))
       })
       .catch((error: any) => {
         spinner.fail(chalk.redBright(`Databases could not be deleted`))

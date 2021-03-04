@@ -7,11 +7,11 @@ import { DeleteDatabases } from '../../../fauna/application/command/database/Del
 
 export class DeleteDatabaseAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
-    const name = inputs.find((value: Input) => {
-      return value.name === 'name'
+    const names = inputs.find((value: Input) => {
+      return value.name === 'names'
     })
 
-    if (name == null || typeof name.value !== 'string') {
+    if (names == null || typeof names.value !== 'string') {
       throw new Error('Incorrect name')
     }
 
@@ -23,7 +23,7 @@ export class DeleteDatabaseAction extends AbstractAction {
         initial: false,
         name: 'confirmed',
         message: `Are you sure you want to delete database(s) ${chalk.yellowBright(
-          name.value
+          names.value
         )}?`,
       })
 
@@ -33,7 +33,7 @@ export class DeleteDatabaseAction extends AbstractAction {
     }
 
     const spinner = ora().start('Delete database')
-    const databaseNames = name.value.split(',')
+    const databaseNames = names.value.split(',')
 
     for (const databaseName of databaseNames) {
       await new DeleteDatabases()
@@ -49,6 +49,6 @@ export class DeleteDatabaseAction extends AbstractAction {
         })
     }
 
-    spinner.succeed(chalk.green('Action databases:delete completed'))
+    spinner.succeed(chalk.green('Action delete:databases completed'))
   }
 }

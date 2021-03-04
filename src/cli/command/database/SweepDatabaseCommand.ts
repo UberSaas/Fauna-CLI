@@ -6,7 +6,7 @@ export class SweepDatabaseCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('databases:sweep')
+      .command('sweep')
       .description(
         'Sweep database. Deletes everything inside the database: child databases, collections, indexes, functions, roles.'
       )
