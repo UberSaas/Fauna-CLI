@@ -5,7 +5,7 @@ import * as ora from 'ora'
 import { prompt } from 'enquirer'
 import { DeleteDatabases } from '../../../fauna/application/command/database/DeleteDatabases'
 
-export class DeleteDatabaseAction extends AbstractAction {
+export class DeleteDatabasesAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const names = inputs.find((value: Input) => {
       return value.name === 'names'
