@@ -22,6 +22,10 @@ import { SweepDatabaseCommand } from './database/SweepDatabaseCommand'
 import { SweepDatabaseAction } from '../action/database/SweepDatabaseAction'
 import { ListCommand } from './database/ListCommand'
 import { ListAction } from '../action/database/ListAction'
+import { ListIndexesAction } from '../action/index/ListIndexesAction'
+import { CreateIndexAction } from '../action/index/CreateIndexAction'
+import { CreateIndexCommand } from './index/CreateIndexCommand'
+import { ListIndexesCommand } from './index/ListIndexesCommand'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -42,6 +46,10 @@ export class CommandLoader {
     new DeleteAllCollectionsCommand(new DeleteAllCollectionsAction()).load(
       program
     )
+
+    // Collection
+    new ListIndexesCommand(new ListIndexesAction()).load(program)
+    new CreateIndexCommand(new CreateIndexAction()).load(program)
 
     this.handleInvalidCommand(program)
   }
