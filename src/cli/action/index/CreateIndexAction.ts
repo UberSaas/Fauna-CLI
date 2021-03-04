@@ -8,8 +8,6 @@ export class CreateIndexAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const spinner = ora().start('Create index')
 
-    console.log(inputs)
-
     const nameInput = inputs.find((value: Input) => {
       return value.name === 'name'
     })
