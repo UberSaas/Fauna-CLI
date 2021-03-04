@@ -15,17 +15,21 @@ export class DeleteCollectionsAction extends AbstractAction {
       throw new Error('Incorrect name')
     }
 
-    const response: any = await prompt({
-      type: 'confirm',
-      initial: false,
-      name: 'confirmed',
-      message: `Sure you want to delete collection(s) ${chalk.yellowBright(
-        name.value
-      )}?`,
-    })
+    const force = options && options.find((option) => option.name === 'force')
 
-    if (!response.confirmed) {
-      process.exit(0)
+    if (force === undefined || !force.value) {
+      const response: any = await prompt({
+        type: 'confirm',
+        initial: false,
+        name: 'confirmed',
+        message: `Are you sure you want to delete collection(s) ${chalk.yellowBright(
+          name.value
+        )}?`,
+      })
+
+      if (!response.confirmed) {
+        process.exit(0)
+      }
     }
 
     const spinner = ora().start('Delete collections')

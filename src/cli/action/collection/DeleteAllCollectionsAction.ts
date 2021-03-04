@@ -8,15 +8,19 @@ import { prompt } from 'enquirer'
 
 export class DeleteAllCollectionsAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
-    const response: any = await prompt({
-      type: 'confirm',
-      initial: false,
-      name: 'confirmed',
-      message: `Sure you want to delete all collections?`,
-    })
+    const force = options && options.find((option) => option.name === 'force')
 
-    if (!response.confirmed) {
-      process.exit(0)
+    if (force === undefined || !force.value) {
+      const response: any = await prompt({
+        type: 'confirm',
+        initial: false,
+        name: 'confirmed',
+        message: `Are you sure you want to delete all collections?`,
+      })
+
+      if (!response.confirmed) {
+        process.exit(0)
+      }
     }
 
     const spinner = ora().start('Delete all collections')

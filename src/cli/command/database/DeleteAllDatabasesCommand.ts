@@ -1,5 +1,6 @@
 import { CommanderStatic } from 'commander'
 import { AbstractCommand } from '@nestjs/cli/commands/abstract.command'
+import { Input } from '@nestjs/cli/commands'
 
 export class DeleteAllDatabasesCommand extends AbstractCommand {
   // @ts-ignore
@@ -7,8 +8,13 @@ export class DeleteAllDatabasesCommand extends AbstractCommand {
     program
       .command('databases:delete:all')
       .description('Delete all databases')
-      .action(async () => {
-        await this.action.handle()
+      .option('-f, --force <forced>', 'Disable confirmation prompt', false)
+      .action(async (options) => {
+        const optionsInputs: Input[] = options.force
+          ? [{ name: 'force', value: true }]
+          : []
+
+        await this.action.handle([], optionsInputs)
       })
   }
 }

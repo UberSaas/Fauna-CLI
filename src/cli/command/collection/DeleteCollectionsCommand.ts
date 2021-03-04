@@ -8,10 +8,16 @@ export class DeleteCollectionsCommand extends AbstractCommand {
     program
       .command('collections:delete [name]')
       .description('Delete one or more collections')
-      .action(async (name: string) => {
+      .option('-f, --force <forced>', 'Disable confirmation prompt', false)
+      .action(async (name, options) => {
         const inputs: Input[] = []
         inputs.push({ name: 'name', value: name })
-        await this.action.handle(inputs)
+
+        const optionsInputs: Input[] = options.force
+          ? [{ name: 'force', value: true }]
+          : []
+
+        await this.action.handle(inputs, optionsInputs)
       })
   }
 }
