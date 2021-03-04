@@ -4,7 +4,7 @@ import { ERROR_PREFIX } from '@nestjs/cli/lib/ui'
 import { CreateDatabaseAction, TestAction } from '../action'
 import { CreateDatabaseCommand } from './database/CreateDatabaseCommand'
 import { TestCommand } from './TestCommand'
-import { DeleteDatabaseCommand } from './database/DeleteDatabaseCommand'
+import { DeleteDatabasesCommand } from './database/DeleteDatabasesCommand'
 import { DeleteDatabaseAction } from '../action/database/DeleteDatabaseAction'
 import { CreateCollectionsCommand } from './collection/CreateCollectionsCommand'
 import { CreateCollectionsAction } from '../action/collection/CreateCollectionsAction'
@@ -35,7 +35,7 @@ export class CommandLoader {
     new ListCommand(new ListAction()).load(program)
     new ListDatabasesCommand(new ListDatabasesAction()).load(program)
     new CreateDatabaseCommand(new CreateDatabaseAction()).load(program)
-    new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
+    new DeleteDatabasesCommand(new DeleteDatabaseAction()).load(program)
     new DeleteAllDatabasesCommand(new DeleteAllDatabasesAction()).load(program)
     new SweepDatabaseCommand(new SweepDatabaseAction()).load(program)
 

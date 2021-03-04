@@ -2,7 +2,7 @@ import { CommanderStatic } from 'commander'
 import { AbstractCommand } from '@nestjs/cli/commands/abstract.command'
 import { Input } from '@nestjs/cli/commands'
 
-export class DeleteDatabaseCommand extends AbstractCommand {
+export class DeleteDatabasesCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
