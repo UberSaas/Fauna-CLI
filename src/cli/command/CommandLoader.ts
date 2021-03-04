@@ -26,6 +26,10 @@ import { ListIndexesAction } from '../action/index/ListIndexesAction'
 import { CreateIndexAction } from '../action/index/CreateIndexAction'
 import { CreateIndexCommand } from './index/CreateIndexCommand'
 import { ListIndexesCommand } from './index/ListIndexesCommand'
+import { DeleteIndexesCommand } from './index/DeleteIndexesCommand'
+import { DeleteAllIndexesCommand } from './index/DeleteAllIndexesCommand'
+import { DeleteAllIndexesAction } from '../action/index/DeleteAllIndexesAction'
+import { DeleteIndexesAction } from '../action/index/DeleteIndexesAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -50,6 +54,8 @@ export class CommandLoader {
     // Collection
     new ListIndexesCommand(new ListIndexesAction()).load(program)
     new CreateIndexCommand(new CreateIndexAction()).load(program)
+    new DeleteIndexesCommand(new DeleteIndexesAction()).load(program)
+    new DeleteAllIndexesCommand(new DeleteAllIndexesAction()).load(program)
 
     this.handleInvalidCommand(program)
   }
