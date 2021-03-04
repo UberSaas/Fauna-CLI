@@ -16,6 +16,8 @@ export class DeleteDatabaseAction extends AbstractAction {
     }
 
     const force = options && options.find((option) => option.name === 'force')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
 
     if (force === undefined || !force.value) {
       const response: any = await prompt({
@@ -35,11 +37,13 @@ export class DeleteDatabaseAction extends AbstractAction {
     const spinner = ora().start('Delete database')
     const databaseNames = names.value.split(',')
 
+    spinner.info(chalk.cyanBright('\nDatabases deleted:'))
+
     for (const databaseName of databaseNames) {
       await new DeleteDatabases()
         .execute([databaseName])
         .then(() => {
-          spinner.succeed(chalk.green(`Database '${databaseName}' deleted`))
+          spinner.info(chalk.yellowBright(`- ${databaseName}`))
         })
         .catch((error: any) => {
           spinner.fail(
@@ -50,5 +54,9 @@ export class DeleteDatabaseAction extends AbstractAction {
     }
 
     spinner.succeed(chalk.green('Action delete:databases completed'))
+
+    if (!subAction) {
+      process.exit(0)
+    }
   }
 }

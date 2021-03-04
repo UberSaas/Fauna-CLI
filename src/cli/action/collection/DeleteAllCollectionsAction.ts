@@ -9,6 +9,8 @@ import { prompt } from 'enquirer'
 export class DeleteAllCollectionsAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const force = options && options.find((option) => option.name === 'force')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
 
     if (force === undefined || !force.value) {
       const response: any = await prompt({
@@ -29,7 +31,9 @@ export class DeleteAllCollectionsAction extends AbstractAction {
       .execute()
       .then(async (collectionNames) => {
         if (collectionNames.length === 0) {
-          spinner.succeed(chalk.green('No collections'))
+          spinner.info(chalk.yellowBright('\nNo collections to delete'))
+        } else {
+          spinner.info(chalk.cyanBright('\nCollections deleted:'))
         }
 
         const deleteCollections = new DeleteCollections()
@@ -37,9 +41,7 @@ export class DeleteAllCollectionsAction extends AbstractAction {
           await deleteCollections
             .execute([collectionName])
             .then(() => {
-              spinner.succeed(
-                chalk.green(`Collection '${collectionName}' deleted`)
-              )
+              spinner.info(chalk.yellowBright(`- ${collectionName}`))
             })
             .catch((error: any) => {
               spinner.fail(
@@ -52,6 +54,10 @@ export class DeleteAllCollectionsAction extends AbstractAction {
         }
 
         spinner.succeed(chalk.green('Action delete:collections:all completed'))
+
+        if (!subAction) {
+          process.exit(0)
+        }
       })
       .catch((error: any) => {
         spinner.fail(chalk.redBright(`Collections could not be deleted`))

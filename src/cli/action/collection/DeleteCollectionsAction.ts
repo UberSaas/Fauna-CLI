@@ -16,6 +16,8 @@ export class DeleteCollectionsAction extends AbstractAction {
     }
 
     const force = options && options.find((option) => option.name === 'force')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
 
     if (force === undefined || !force.value) {
       const response: any = await prompt({
@@ -35,11 +37,13 @@ export class DeleteCollectionsAction extends AbstractAction {
     const spinner = ora().start('Delete collections')
     const collectionNames = names.value.split(',')
 
+    spinner.info(chalk.cyanBright('\nCollections deleted:'))
+
     for (const collectionName of collectionNames) {
       await new DeleteCollections()
         .execute([collectionName])
         .then(() => {
-          spinner.succeed(chalk.green(`Collection '${collectionName}' deleted`))
+          spinner.info(chalk.yellowBright(`- ${collectionName}`))
         })
         .catch((error: any) => {
           spinner.fail(
@@ -52,5 +56,9 @@ export class DeleteCollectionsAction extends AbstractAction {
     }
 
     spinner.succeed(chalk.green('Action delete:collections completed'))
+
+    if (!subAction) {
+      process.exit(0)
+    }
   }
 }

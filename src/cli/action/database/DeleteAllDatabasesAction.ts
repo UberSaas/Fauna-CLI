@@ -9,6 +9,8 @@ import { prompt } from 'enquirer'
 export class DeleteAllDatabasesAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const force = options && options.find((option) => option.name === 'force')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
 
     if (force === undefined || !force.value) {
       const response: any = await prompt({
@@ -29,7 +31,9 @@ export class DeleteAllDatabasesAction extends AbstractAction {
       .execute()
       .then(async (databaseNames) => {
         if (databaseNames.length === 0) {
-          spinner.succeed(chalk.green('No databases'))
+          spinner.info(chalk.yellowBright('\nNo databases to delete'))
+        } else {
+          spinner.info(chalk.cyanBright('\nDatabases deleted:'))
         }
 
         const deleteDatabases = new DeleteDatabases()
@@ -37,7 +41,7 @@ export class DeleteAllDatabasesAction extends AbstractAction {
           await deleteDatabases
             .execute([databaseName])
             .then(() => {
-              spinner.succeed(chalk.green(`Database '${databaseName}' deleted`))
+              spinner.info(chalk.yellowBright(`- ${databaseName}`))
             })
             .catch((error: any) => {
               spinner.fail(
@@ -50,6 +54,10 @@ export class DeleteAllDatabasesAction extends AbstractAction {
         }
 
         spinner.succeed(chalk.green('Action delete:databases:all completed'))
+
+        if (!subAction) {
+          process.exit(0)
+        }
       })
       .catch((error: any) => {
         spinner.fail(chalk.redBright(`Databases could not be deleted`))

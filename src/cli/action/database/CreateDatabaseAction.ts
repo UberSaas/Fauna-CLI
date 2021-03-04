@@ -17,12 +17,16 @@ export class CreateDatabaseAction extends AbstractAction {
     }
 
     const databaseNames = names.value.split(',')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
+
+    spinner.info(chalk.cyanBright('\nDatabases created:'))
 
     for (const databaseName of databaseNames) {
       await new CreateDatabases()
         .execute([databaseName])
         .then(() => {
-          spinner.succeed(chalk.green(`Database '${databaseName}' created`))
+          spinner.info(chalk.yellowBright(`- ${databaseName}`))
         })
         .catch((error: any) => {
           spinner.fail(
@@ -33,5 +37,9 @@ export class CreateDatabaseAction extends AbstractAction {
     }
 
     spinner.succeed(chalk.green('Action create:databases completed'))
+
+    if (!subAction) {
+      process.exit(0)
+    }
   }
 }

@@ -9,6 +9,7 @@ import { DeleteAllCollectionsAction } from '../collection/DeleteAllCollectionsAc
 export class SweepDatabaseAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
     const force = options && options.find((option) => option.name === 'force')
+    options = options === undefined ? [] : options
 
     if (force === undefined || !force.value) {
       const response: any = await prompt({
@@ -21,15 +22,14 @@ export class SweepDatabaseAction extends AbstractAction {
       if (!response.confirmed) {
         process.exit(0)
       }
-    } else {
+
       // Make sure called actions will be executed by disabling confirmation prompt.
-      options.push({
-        value: true,
-        name: 'force',
-      })
+      options.push({ name: 'force', value: true })
     }
 
-    const spinner = ora().start('Sweep database')
+    const spinner = ora().start()
+
+    options.push({ name: 'subAction', value: true })
 
     await new DeleteAllDatabasesAction().handle(inputs, options)
     await new DeleteAllCollectionsAction().handle(inputs, options)

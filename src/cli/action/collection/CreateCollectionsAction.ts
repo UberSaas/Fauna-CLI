@@ -17,12 +17,16 @@ export class CreateCollectionsAction extends AbstractAction {
     }
 
     const collectionNames = names.value.split(',')
+    const subAction =
+      options && options.find((option) => option.name === 'subAction')
+
+    spinner.info(chalk.cyanBright('\nCollections created:'))
 
     for (const collectionName of collectionNames) {
       await new CreateCollections()
         .execute([collectionName])
         .then(() => {
-          spinner.succeed(chalk.green(`Collection '${collectionName}' created`))
+          spinner.info(chalk.yellowBright(`- ${collectionName}`))
         })
         .catch((error: any) => {
           spinner.fail(
@@ -35,5 +39,9 @@ export class CreateCollectionsAction extends AbstractAction {
     }
 
     spinner.succeed(chalk.green('Action create:collections completed'))
+
+    if (!subAction) {
+      process.exit(0)
+    }
   }
 }
