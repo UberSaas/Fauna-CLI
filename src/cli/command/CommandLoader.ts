@@ -18,6 +18,8 @@ import { DeleteAllCollectionsCommand } from './collection/DeleteAllCollectionsCo
 import { DeleteAllCollectionsAction } from '../action/collection/DeleteAllCollectionsAction'
 import { DeleteAllDatabasesCommand } from './database/DeleteAllDatabasesCommand'
 import { DeleteAllDatabasesAction } from '../action/database/DeleteAllDatabasesAction'
+import { SweepDatabaseCommand } from './database/SweepDatabaseCommand'
+import { SweepDatabaseAction } from '../action/database/SweepDatabaseAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -28,6 +30,7 @@ export class CommandLoader {
     new CreateDatabaseCommand(new CreateDatabaseAction()).load(program)
     new DeleteDatabaseCommand(new DeleteDatabaseAction()).load(program)
     new DeleteAllDatabasesCommand(new DeleteAllDatabasesAction()).load(program)
+    new SweepDatabaseCommand(new SweepDatabaseAction()).load(program)
 
     // Collection
     new ListCollectionsCommand(new ListCollectionsAction()).load(program)
