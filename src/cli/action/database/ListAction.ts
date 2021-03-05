@@ -6,6 +6,7 @@ import { ListIndexesAction } from '../index/ListIndexesAction'
 
 export class ListAction extends AbstractAction {
   public async handle(inputs: Input[], options: Input[]): Promise<void> {
+    // Make sure subActions aren't exited
     options = options === undefined ? [] : options
     options.push({ name: 'subAction', value: true })
 

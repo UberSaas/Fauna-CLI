@@ -28,6 +28,10 @@ export class CreateIndexAction extends AbstractAction {
       return value.name === 'values'
     })
 
+    const reverseInput = inputs.find((value: Input) => {
+      return value.name === 'reverse'
+    })
+
     if (nameInput == null || typeof nameInput.value !== 'string') {
       throw new Error('Incorrect name')
     }
@@ -53,6 +57,15 @@ export class CreateIndexAction extends AbstractAction {
       valuesInput !== undefined && typeof valuesInput.value === 'string'
         ? valuesInput.value.split(',')
         : undefined
+    const reverseStrings: undefined | string[] =
+      reverseInput !== undefined && typeof reverseInput.value === 'string'
+        ? reverseInput.value.split(',')
+        : undefined
+    const reverse: boolean[] = []
+
+    reverseStrings?.forEach((reverseString) => {
+      reverse.push(reverseString === 'true')
+    })
 
     const subAction =
       options && options.find((option) => option.name === 'subAction')
@@ -60,9 +73,9 @@ export class CreateIndexAction extends AbstractAction {
     spinner.info(chalk.cyanBright('\nIndexes created:'))
 
     await new CreateIndex()
-      .execute(indexName, collectionName, unique, terms, values)
+      .execute(indexName, collectionName, unique, terms, values, reverse)
       .then(() => {
-        spinner.info(chalk.yellowBright(`- ${collectionName}`))
+        spinner.info(chalk.yellowBright(`- ${indexName}`))
       })
       .catch((error: any) => {
         spinner.fail(

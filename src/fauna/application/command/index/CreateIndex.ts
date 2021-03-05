@@ -8,7 +8,8 @@ export class CreateIndex extends AbstractCommand {
     collectionName: string,
     unique?: boolean,
     terms?: string[],
-    values?: string[]
+    values?: string[],
+    reverse?: boolean[]
   ): Promise<any> {
     let termsInput: any = undefined
     let valuesInput: any = undefined
@@ -23,13 +24,17 @@ export class CreateIndex extends AbstractCommand {
       })
     }
 
-    if (values !== undefined) {
-      values.forEach((value) => {
-        if (valuesInput === undefined) {
-          valuesInput = []
-        }
+    if (values !== undefined && values.length > 0) {
+      valuesInput = []
 
-        valuesInput.push({ field: ['data', value] })
+      values.forEach((value, index) => {
+        valuesInput.push({
+          field: ['data', value],
+          reverse:
+            reverse !== undefined && reverse[index] != null
+              ? reverse[index]
+              : undefined,
+        })
       })
 
       valuesInput.push({ field: ['ref'] })

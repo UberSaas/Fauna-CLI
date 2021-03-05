@@ -6,7 +6,9 @@ export class CreateIndexCommand extends AbstractCommand {
   // @ts-ignore
   load(program: CommanderStatic): void {
     program
-      .command('create:index [name] [collectionName] [unique] [terms] [values]')
+      .command(
+        'create:index [name] [collectionName] [unique] [terms] [values] [reverse]'
+      )
       .description('Create an index')
       .action(
         async (
@@ -14,7 +16,8 @@ export class CreateIndexCommand extends AbstractCommand {
           collectionName: string,
           unique?: string,
           terms?: string,
-          values?: string
+          values?: string,
+          reverse?: string
         ) => {
           const inputs: Input[] = [
             { name: 'name', value: name },
@@ -30,6 +33,11 @@ export class CreateIndexCommand extends AbstractCommand {
             {
               name: 'values',
               value: values !== undefined && values !== 'none' ? values : false,
+            },
+            {
+              name: 'reverse',
+              value:
+                reverse !== undefined && reverse !== 'none' ? reverse : false,
             },
           ]
 

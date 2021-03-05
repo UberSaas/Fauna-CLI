@@ -30,6 +30,12 @@ import { DeleteIndexesCommand } from './index/DeleteIndexesCommand'
 import { DeleteAllIndexesCommand } from './index/DeleteAllIndexesCommand'
 import { DeleteAllIndexesAction } from '../action/index/DeleteAllIndexesAction'
 import { DeleteIndexesAction } from '../action/index/DeleteIndexesAction'
+import { CreateSchemaAction } from '../action/schema/CreateSchemaAction'
+import { CreateSchemaCommand } from './schema/CreateSchemaCommand'
+import { CreateSortIndexesAction } from '../action/index/CreateSortIndexesAction'
+import { CreateSortIndexesCommand } from './index/CreateSortIndexesCommand'
+import { CreateSearchIndexesCommand } from './index/CreateSearchIndexesCommand'
+import { CreateSearchIndexesAction } from '../action/index/CreateSearchIndexesAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -54,8 +60,15 @@ export class CommandLoader {
     // Collection
     new ListIndexesCommand(new ListIndexesAction()).load(program)
     new CreateIndexCommand(new CreateIndexAction()).load(program)
+    new CreateSearchIndexesCommand(new CreateSearchIndexesAction()).load(
+      program
+    )
+    new CreateSortIndexesCommand(new CreateSortIndexesAction()).load(program)
     new DeleteIndexesCommand(new DeleteIndexesAction()).load(program)
     new DeleteAllIndexesCommand(new DeleteAllIndexesAction()).load(program)
+
+    // Schema
+    new CreateSchemaCommand(new CreateSchemaAction()).load(program)
 
     this.handleInvalidCommand(program)
   }

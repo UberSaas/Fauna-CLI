@@ -29,6 +29,7 @@ export class SweepDatabaseAction extends AbstractAction {
 
     const spinner = ora().start()
 
+    // Make sure subActions aren't exited
     options.push({ name: 'subAction', value: true })
 
     await new DeleteAllDatabasesAction().handle(inputs, options)
