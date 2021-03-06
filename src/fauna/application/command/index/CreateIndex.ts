@@ -18,9 +18,15 @@ export class CreateIndex extends AbstractCommand {
       termsInput = []
 
       terms.forEach((term) => {
-        termsInput.push({
-          field: ['data'].concat(term),
-        })
+        if (term === 'ref') {
+          termsInput.push({
+            field: ['ref'],
+          })
+        } else {
+          termsInput.push({
+            field: ['data'].concat(term),
+          })
+        }
       })
     }
 

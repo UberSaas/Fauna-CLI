@@ -36,6 +36,7 @@ export class CreateSortIndexesAction extends AbstractAction {
     const multiSort =
       multiSortInput !== undefined &&
       (multiSortInput.value === true || multiSortInput.value === 'true')
+    const terms = ['ref']
 
     const subAction =
       options && options.find((option) => option.name === 'subAction')
@@ -54,7 +55,7 @@ export class CreateSortIndexesAction extends AbstractAction {
        * Ascending sort index
        */
       await new CreateIndex()
-        .execute(indexName + 'Asc', collectionName, undefined, undefined, [
+        .execute(indexName + 'Asc', collectionName, undefined, terms, [
           sortField,
         ])
         .then(() => {
@@ -88,7 +89,7 @@ export class CreateSortIndexesAction extends AbstractAction {
                 _ascIndexName,
                 collectionName,
                 undefined,
-                undefined,
+                terms,
                 [sortField, secondSortField],
                 [false, false]
               )
@@ -119,7 +120,7 @@ export class CreateSortIndexesAction extends AbstractAction {
                 _descIndexName,
                 collectionName,
                 undefined,
-                undefined,
+                terms,
                 [sortField, secondSortField],
                 [false, true]
               )
@@ -146,7 +147,7 @@ export class CreateSortIndexesAction extends AbstractAction {
           indexName + 'Desc',
           collectionName,
           undefined,
-          undefined,
+          terms,
           [sortField],
           [true]
         )
@@ -181,7 +182,7 @@ export class CreateSortIndexesAction extends AbstractAction {
                 _ascIndexName,
                 collectionName,
                 undefined,
-                undefined,
+                terms,
                 [sortField, secondSortField],
                 [true, false]
               )
@@ -212,7 +213,7 @@ export class CreateSortIndexesAction extends AbstractAction {
                 _descIndexName,
                 collectionName,
                 undefined,
-                undefined,
+                terms,
                 [sortField, secondSortField],
                 [true, true]
               )
