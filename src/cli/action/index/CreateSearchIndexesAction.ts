@@ -47,11 +47,16 @@ export class CreateSearchIndexesAction extends AbstractAction {
 
     spinner.info(chalk.cyanBright('\nSearch indexes created:'))
 
+    // Also create an index for the requiredFilter
+    if (requiredFilter !== undefined) {
+      searchFields.unshift(requiredFilter)
+    }
+
     for (const searchField of searchFields) {
       let indexName = collectionName + 'SearchBy'
       const terms = []
 
-      if (requiredFilter !== undefined) {
+      if (requiredFilter !== undefined && searchField !== requiredFilter) {
         indexName +=
           requiredFilter.charAt(0).toUpperCase() +
           requiredFilter.slice(1) +
