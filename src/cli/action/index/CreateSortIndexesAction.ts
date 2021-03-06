@@ -34,7 +34,8 @@ export class CreateSortIndexesAction extends AbstractAction {
     const collectionName = collectionNameInput.value
     const sortFields = sortFieldsInput.value.split(',')
     const multiSort =
-      multiSortInput !== undefined && multiSortInput.value === 'true'
+      multiSortInput !== undefined &&
+      (multiSortInput.value === true || multiSortInput.value === 'true')
 
     const subAction =
       options && options.find((option) => option.name === 'subAction')

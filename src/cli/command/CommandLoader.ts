@@ -36,6 +36,8 @@ import { CreateSortIndexesAction } from '../action/index/CreateSortIndexesAction
 import { CreateSortIndexesCommand } from './index/CreateSortIndexesCommand'
 import { CreateSearchIndexesCommand } from './index/CreateSearchIndexesCommand'
 import { CreateSearchIndexesAction } from '../action/index/CreateSearchIndexesAction'
+import { CreateModelCommand } from './schema/CreateModelCommand'
+import { CreateModelAction } from '../action/schema/CreateModelAction'
 
 export class CommandLoader {
   public static load(program: CommanderStatic): void {
@@ -68,6 +70,7 @@ export class CommandLoader {
     new DeleteAllIndexesCommand(new DeleteAllIndexesAction()).load(program)
 
     // Schema
+    new CreateModelCommand(new CreateModelAction()).load(program)
     new CreateSchemaCommand(new CreateSchemaAction()).load(program)
 
     this.handleInvalidCommand(program)
