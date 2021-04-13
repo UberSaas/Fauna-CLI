@@ -6,5 +6,6 @@ export interface SchemaModel {
   requiredFilter?: string
   searchFields?: Array<string>
   sortFields?: Array<string>
+  uniqueFields?: Array<string>
   multiSort?: boolean
 }

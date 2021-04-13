@@ -56,6 +56,13 @@ export class CreateSchemaAction extends AbstractAction {
         })
       }
 
+      if (model.uniqueFields !== undefined) {
+        modelInputs.push({
+          name: 'uniqueFields',
+          value: model.uniqueFields.join(','),
+        })
+      }
+
       if (model.multiSort !== undefined) {
         modelInputs.push({
           name: 'multiSort',

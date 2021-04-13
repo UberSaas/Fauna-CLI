@@ -16,6 +16,10 @@ export class CreateSearchIndexesAction extends AbstractAction {
       return value.name === 'searchFields'
     })
 
+    const uniqueFieldsInput = inputs.find((value: Input) => {
+      return value.name === 'uniqueFields'
+    })
+
     const requiredFilterInput = inputs.find((value: Input) => {
       return value.name === 'requiredFilter'
     })
@@ -36,6 +40,11 @@ export class CreateSearchIndexesAction extends AbstractAction {
 
     const collectionName = collectionNameInput.value
     const searchFields = searchFieldsInput.value.split(',')
+    const uniqueFields =
+      uniqueFieldsInput !== undefined &&
+      typeof uniqueFieldsInput.value === 'string'
+        ? uniqueFieldsInput.value.split(',')
+        : undefined
     const requiredFilter =
       requiredFilterInput !== undefined &&
       typeof requiredFilterInput.value === 'string'
@@ -67,8 +76,11 @@ export class CreateSearchIndexesAction extends AbstractAction {
       indexName += searchField.charAt(0).toUpperCase() + searchField.slice(1)
       terms.push(searchField)
 
+      const isUnique: boolean =
+        uniqueFields !== undefined && uniqueFields.includes(searchField)
+
       await new CreateIndex()
-        .execute(indexName, collectionName, false, terms)
+        .execute(indexName, collectionName, isUnique, terms)
         .then(() => {
           spinner.info(chalk.yellowBright(`- ${indexName}`))
         })

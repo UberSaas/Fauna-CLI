@@ -33,6 +33,10 @@ export class CreateModelAction extends AbstractAction {
       return value.name === 'sortFields'
     })
 
+    const uniqueFieldsInput = inputs.find((value: Input) => {
+      return value.name === 'uniqueFields'
+    })
+
     const multiSortInput = inputs.find((value: Input) => {
       return value.name === 'multiSort'
     })
@@ -55,6 +59,11 @@ export class CreateModelAction extends AbstractAction {
     const sortFields =
       sortFieldsInput !== undefined && typeof sortFieldsInput.value === 'string'
         ? sortFieldsInput.value.split(',')
+        : undefined
+    const uniqueFields =
+      uniqueFieldsInput !== undefined &&
+      typeof uniqueFieldsInput.value === 'string'
+        ? uniqueFieldsInput.value.split(',')
         : undefined
     const multiSort: undefined | boolean =
       multiSortInput !== undefined && typeof multiSortInput.value === 'boolean'
@@ -97,6 +106,13 @@ export class CreateModelAction extends AbstractAction {
         searchInputs.push({
           name: 'requiredFilter',
           value: requiredFilter,
+        })
+      }
+
+      if (uniqueFields !== undefined) {
+        searchInputs.push({
+          name: 'uniqueFields',
+          value: uniqueFields.join(','),
         })
       }
 
